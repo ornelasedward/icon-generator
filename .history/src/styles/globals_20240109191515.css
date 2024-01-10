@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply @bg-gray;
+}
+
+@screen sm {
+    body {
+        @apply @bg-red;
+    }
+}
+```
