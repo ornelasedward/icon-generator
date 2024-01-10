@@ -4,7 +4,7 @@ import { use, useState } from "react";
 import { Input } from "~/component/Input";
 import { FormGroup } from "~/component/FormGroup";
 import { api } from "~/utils/api";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { Button } from "~/component/Button";
 
 const GeneratePage: NextPage = () => {
@@ -38,7 +38,7 @@ const GeneratePage: NextPage = () => {
 
     const session = useSession();
 
-    const isLoggedIn = !!session.data;
+    const isLoggedIn = session?.user;
 
   return (
     <>
@@ -48,13 +48,7 @@ const GeneratePage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center">
-        {!isLoggedIn && (
         <Button onClick={signIn}>Login</Button>
-        )}
-         {isLoggedIn && (
-        <Button onClick={signOut}>LogOut</Button>
-        )}
-        {session.data?.user?.name}
         <form className="flex flex-col gap-3"
             onSubmit={handleFormSubmit}
             >

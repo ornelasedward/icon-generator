@@ -54,7 +54,6 @@ const GeneratePage: NextPage = () => {
          {isLoggedIn && (
         <Button onClick={signOut}>LogOut</Button>
         )}
-        {session.data?.user?.name}
         <form className="flex flex-col gap-3"
             onSubmit={handleFormSubmit}
             >

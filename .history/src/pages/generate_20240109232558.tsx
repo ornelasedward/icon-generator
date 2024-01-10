@@ -4,7 +4,7 @@ import { use, useState } from "react";
 import { Input } from "~/component/Input";
 import { FormGroup } from "~/component/FormGroup";
 import { api } from "~/utils/api";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { Button } from "~/component/Button";
 
 const GeneratePage: NextPage = () => {
@@ -52,9 +52,8 @@ const GeneratePage: NextPage = () => {
         <Button onClick={signIn}>Login</Button>
         )}
          {isLoggedIn && (
-        <Button onClick={signOut}>LogOut</Button>
+        <Button onClick={signIn}>Login</Button>
         )}
-        {session.data?.user?.name}
         <form className="flex flex-col gap-3"
             onSubmit={handleFormSubmit}
             >
