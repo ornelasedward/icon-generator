@@ -69,7 +69,9 @@ const GeneratePage: NextPage = () => {
             </FormGroup>
             <Button className="rounded px-6 py-4 bg-blue-400">Generate</Button>
         </form>
+        {imageUrl && (
             <img src={imageUrl} />
+        )}
       </main>
     </>
   );

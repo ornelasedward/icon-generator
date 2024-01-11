@@ -2,14 +2,6 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { OpenAIApi, Configuration } from "openai";
-import { env } from "~/env.mjs";
-
-const configuration = new Configuration({
-    apiKey: env.DALLE_API_KEY,
-});
-const openai = new OpenAIApi(configuration);
-
 
 export const generateRouter = createTRPCRouter({
     generateIcon: protectedProcedure.input(
@@ -18,7 +10,7 @@ export const generateRouter = createTRPCRouter({
         })
     )
     .mutation(async ({ctx, input}) => {
-        const {count} = await ctx.prisma.user.updateMany({
+        const {count} result = await ctx.prisma.user.updateMany({
             where: {
                 id: ctx.session.user.id,
                 credits: {
@@ -36,20 +28,13 @@ export const generateRouter = createTRPCRouter({
             throw new TRPCError({
                 code: 'BAD_REQUEST',
                 message: 'You do not have enough credits to generate an icon.',
-            });
+            })
         }
 
-        // TODO: make fetch request to the Dalle API
-        const response = await openai.createImage({
-            prompt: input.prompt,
-            n: 1,
-            size: "1024x1024",
-          });
-
-          const url = response.data.data[0]?.url
+        console.log(result);
 
         return {
-           imageUrl: url,
+            message: 'success',
         }
     }),
 });

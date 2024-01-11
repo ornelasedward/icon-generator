@@ -2,8 +2,9 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { OpenAIApi, Configuration } from "openai";
-import { env } from "~/env.mjs";
+import OpenAIApi from "openai"
+import Configuration from "openai";
+import { env } from "~/env.mjs"
 
 const configuration = new Configuration({
     apiKey: env.DALLE_API_KEY,

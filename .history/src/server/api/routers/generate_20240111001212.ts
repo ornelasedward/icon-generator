@@ -2,13 +2,14 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { OpenAIApi, Configuration } from "openai";
-import { env } from "~/env.mjs";
+import OpenAI from "openai"
+import Configuration from "openai";
+import { env } from "~/env.mjs"
 
 const configuration = new Configuration({
     apiKey: env.DALLE_API_KEY,
 });
-const openai = new OpenAIApi(configuration);
+const openai = new OpenAI(configuration);
 
 
 export const generateRouter = createTRPCRouter({
@@ -40,16 +41,15 @@ export const generateRouter = createTRPCRouter({
         }
 
         // TODO: make fetch request to the Dalle API
-        const response = await openai.createImage({
-            prompt: input.prompt,
-            n: 1,
-            size: "1024x1024",
-          });
-
-          const url = response.data.data[0]?.url
+        const response = await openai.createCompletion({
+            model: "text-davinci-003",
+            prompt: "This is a test",
+            temperature: 0,
+            max_tokens: 7,
+        })
 
         return {
-           imageUrl: url,
+            message: 'success',
         }
     }),
 });

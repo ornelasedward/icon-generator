@@ -13,12 +13,9 @@ const GeneratePage: NextPage = () => {
         prompt: "",
     });
 
-    const [imageUrl, setImageUrl] = useState('');
-
     const generateIcon = api.generate.generateIcon.useMutation({
         onSuccess(data) {
-            if (!data.imageUrl) return;
-            setImageUrl(data.imageUrl);
+            console.log('mutation finished', data);
         }
     });
 
@@ -69,7 +66,6 @@ const GeneratePage: NextPage = () => {
             </FormGroup>
             <Button className="rounded px-6 py-4 bg-blue-400">Generate</Button>
         </form>
-            <img src={imageUrl} />
       </main>
     </>
   );
