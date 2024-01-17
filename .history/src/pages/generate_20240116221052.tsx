@@ -70,8 +70,7 @@ const GeneratePage: NextPage = () => {
             </FormGroup>
             <Button className="rounded px-6 py-4 bg-blue-400">Generate</Button>
         </form>
-        <h2 className="text-xl">Your Icons</h2>
-        <section className="mb-12 grid grid-cols-4 gap-4">
+        <section className="mb-12 grid grid-cols-4 gap-4"></section>
             <Image
                   key={imageUrl}
                   src={imageUrl}

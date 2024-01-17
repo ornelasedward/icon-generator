@@ -78,7 +78,7 @@ const GeneratePage: NextPage = () => {
                   alt="an image of your generated prompt"
                   width="512"
                   height="512"
-                  className="w-full"
+                  className="w-full justify-center"
                 />
             </section>
       </main>

@@ -22,7 +22,6 @@ const server = z.object({
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
   DALLE_API_KEY: z.string(),
-  MOCK_DALLE: z.string(),
 });
 
 /**

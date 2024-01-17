@@ -6,7 +6,6 @@ import { FormGroup } from "~/component/FormGroup";
 import { api } from "~/utils/api";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "~/component/Button";
-import Image from "next/image";
 
 const GeneratePage: NextPage = () => {
 
@@ -18,6 +17,7 @@ const GeneratePage: NextPage = () => {
 
     const generateIcon = api.generate.generateIcon.useMutation({
         onSuccess(data) {
+            console.log("Image data received:", data); // Add this line for debugging
             if (!data.imageUrl) return;
             setImageUrl(data.imageUrl);
         }
@@ -70,17 +70,7 @@ const GeneratePage: NextPage = () => {
             </FormGroup>
             <Button className="rounded px-6 py-4 bg-blue-400">Generate</Button>
         </form>
-        <h2 className="text-xl">Your Icons</h2>
-        <section className="mb-12 grid grid-cols-4 gap-4">
-            <Image
-                  key={imageUrl}
-                  src={imageUrl}
-                  alt="an image of your generated prompt"
-                  width="512"
-                  height="512"
-                  className="w-full"
-                />
-            </section>
+            <img src={imageUrl} />
       </main>
     </>
   );
