@@ -16,7 +16,7 @@ async function generateIcon(prompt: string): Promise<string | undefined> {
         const response = await openai.images.generate({
             prompt: prompt,
         });
-        return response.data?.[0]?.url;
+        return response.data?.[0]?.url!;
     }
 }
 

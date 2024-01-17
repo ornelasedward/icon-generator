@@ -23,12 +23,12 @@ const GeneratePage: NextPage = () => {
         }
     });
 
-    function handleFormSubmit(e: React.FormEvent) {
+    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        // TODO: Send form data to backend
         generateIcon.mutate({
             prompt: form.prompt,
         });
-        setForm({ prompt: "" });
     }
 
     function updateForm(key: string) {
@@ -77,13 +77,14 @@ const GeneratePage: NextPage = () => {
                     key={imageUrl}
                     src={imageUrl}
                     alt="an image of your generated prompt"
-                    width={100}
-                    height={100}
+                    width={512}
+                    height={512}
                     className="w-full"
-                    priority="true"
+                    priority // This preloads the image
                 />
             )}
         </section>
+
       </main>
     </>
   );

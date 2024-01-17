@@ -23,12 +23,11 @@ const GeneratePage: NextPage = () => {
         }
     });
 
-    function handleFormSubmit(e: React.FormEvent) {
+    const handleFormSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         generateIcon.mutate({
             prompt: form.prompt,
         });
-        setForm({ prompt: "" });
     }
 
     function updateForm(key: string) {
@@ -73,12 +72,12 @@ const GeneratePage: NextPage = () => {
         <h2 className="text-xl">Your Icons</h2>
         <section className="mb-12 grid grid-cols-4 gap-4">
             {imageUrl && (
-                <Image
+                <img
                     key={imageUrl}
                     src={imageUrl}
                     alt="an image of your generated prompt"
-                    width={100}
-                    height={100}
+                    width={512}
+                    height={512}
                     className="w-full"
                     priority="true"
                 />

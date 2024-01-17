@@ -77,8 +77,8 @@ const GeneratePage: NextPage = () => {
                     key={imageUrl}
                     src={imageUrl}
                     alt="an image of your generated prompt"
-                    width={100}
-                    height={100}
+                    width={512}
+                    height={512}
                     className="w-full"
                     priority="true"
                 />

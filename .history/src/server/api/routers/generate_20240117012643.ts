@@ -9,14 +9,15 @@ const openai = new OpenAI({
     apiKey: env.DALLE_API_KEY
 });
 
-async function generateIcon(prompt: string): Promise<string | undefined> {
-    if (env.MOCK_DALLE_API === "true") {
-        return 'https://plus.unsplash.com/premium_photo-1705056547028-75739841dffa?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHx8';
+async function generateIcon(prompt: string): Promise<string> {
+    console.log("MOCK_DALLE_API:", env.MOCK_DALLE_API); // Add this line for debugging
+    if (env.MOCK_DALLE_API === 'true') {
+        return 'https://oaidalleapiprodscus...';
     } else {
         const response = await openai.images.generate({
             prompt: prompt,
         });
-        return response.data?.[0]?.url;
+        return response.data;
     }
 }
 
