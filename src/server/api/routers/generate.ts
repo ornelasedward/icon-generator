@@ -4,6 +4,16 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import OpenAI from "openai";
 import { env } from "~/env.mjs";
+import { b64Image } from "~/data/b64Image";
+import AWS from "aws-sdk";
+
+const s3 = new AWS.S3({
+    credentials: {
+        accessKeyId: env.ACCESS_KEY_ID,
+        secretAccessKey: env.SECRET_ACCESS_KEY,
+    },
+    region: "us-east-1",
+})
 
 const openai = new OpenAI({
     apiKey: env.DALLE_API_KEY
@@ -11,12 +21,13 @@ const openai = new OpenAI({
 
 async function generateIcon(prompt: string): Promise<string | undefined> {
     if (env.MOCK_DALLE_API === "true") {
-        return 'https://plus.unsplash.com/premium_photo-1705056547028-75739841dffa?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHx8';
+        return b64Image;
     } else {
         const response = await openai.images.generate({
             prompt: prompt,
+            response_format: 'b64_json'
         });
-        return response.data?.[0]?.url;
+        return response.data?.[0]?.b64_json;
     }
 }
 
@@ -48,10 +59,21 @@ export const generateRouter = createTRPCRouter({
             });
         }
 
-        const url = await generateIcon(input.prompt);
+        const base64EncodedImage = await generateIcon(input.prompt);
+
+        // TODO: Save the generated image to the s3 bucket
+        await s3
+        .putObject({
+            Bucket: 'dalle-icon-generator-app',
+            Body: Buffer.from(base64EncodedImage!, "base64"),
+            Key: `my-imagec.png`,
+            ContentEncoding: 'base64',
+            ContentType: 'image/gif',
+        })
+        .promise();
 
         return {
-           imageUrl: url,
+           imageUrl: base64EncodedImage,
         }
     }),
 });

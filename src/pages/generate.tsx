@@ -73,13 +73,11 @@ const GeneratePage: NextPage = () => {
         <h2 className="text-xl">Your Icons</h2>
         <section className="mb-12 grid grid-cols-4 gap-4">
             {imageUrl && (
-                <Image
-                    key={imageUrl}
-                    src={imageUrl}
+                <img
+                    src={`data:image/png;base64,${imageUrl}`}
                     alt="an image of your generated prompt"
-                    width={100}
-                    height={100}
-                    className="w-full"
+                    width="100"
+                    height="100"
                     priority="true"
                 />
             )}
