@@ -11,7 +11,12 @@ const config = {
   reactStrictMode: true,
 
   images: {
-    domains: ["oaidalleapiprodscus.blob.core.windows.net", "plus.unsplash.com"],
+    domains: [
+    "oaidalleapiprodscus.blob.core.windows.net", 
+    "plus.unsplash.com",
+    "dalle-icon-generator-app.s3.us-east-2.amazonaws.com",
+    "dalle-icon-generator-app.s3.amazonaws.com",
+  ],
   },
 
   /**

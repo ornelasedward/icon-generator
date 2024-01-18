@@ -15,6 +15,8 @@ const s3 = new AWS.S3({
     region: "us-east-1",
 })
 
+const BUCKET_NAME = 'dalle-icon-generator-app';
+
 const openai = new OpenAI({
     apiKey: env.DALLE_API_KEY
 });
@@ -71,7 +73,7 @@ export const generateRouter = createTRPCRouter({
         // TODO: Save the generated image to the s3 bucket
         await s3
         .putObject({
-            Bucket: 'dalle-icon-generator-app',
+            Bucket: BUCKET_NAME,
             Body: Buffer.from(base64EncodedImage!, "base64"),
             Key: icon.id,
             ContentEncoding: 'base64',
@@ -80,7 +82,7 @@ export const generateRouter = createTRPCRouter({
         .promise();
 
         return {
-           imageUrl: base64EncodedImage,
+           imageUrl: `https://${BUCKET_NAME}.s3.us-east-2.amazonaws.com/${icon.id}`,
         }
     }),
 });
