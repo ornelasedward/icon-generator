@@ -61,12 +61,19 @@ export const generateRouter = createTRPCRouter({
 
         const base64EncodedImage = await generateIcon(input.prompt);
 
+        const icon = await ctx.prisma.icon.create({
+            data: {
+                prompt: input.prompt,
+                userId: ctx.session.user.id,
+            },
+        });
+
         // TODO: Save the generated image to the s3 bucket
         await s3
         .putObject({
             Bucket: 'dalle-icon-generator-app',
             Body: Buffer.from(base64EncodedImage!, "base64"),
-            Key: `my-imagec.png`,
+            Key: icon.id,
             ContentEncoding: 'base64',
             ContentType: 'image/gif',
         })
