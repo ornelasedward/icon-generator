@@ -25,6 +25,11 @@ const GeneratePage: NextPage = () => {
 
     function handleFormSubmit(e: React.FormEvent) {
         e.preventDefault();
+        if (!isLoggedIn) {
+            setIsModalVisible(true);
+            return;
+        }
+
         generateIcon.mutate({
             prompt: form.prompt,
         });
@@ -39,10 +44,32 @@ const GeneratePage: NextPage = () => {
             }))
         }
     }
+    const [isModalVisible, setIsModalVisible] = useState(false);
 
     const session = useSession();
-
     const isLoggedIn = !!session.data;
+
+    const credits = api.user.getCredits.useQuery();
+
+    const Modal = () => (
+        <div className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 ${isModalVisible ? 'block' : 'hidden'}`}>
+            <div className="w-full max-w-2xl rounded-lg bg-slate-500 p-6 m-auto flex flex-col gap-8 relative">
+                <button 
+                    onClick={() => setIsModalVisible(false)}
+                    className="absolute top-3 right-3 text-white hover:text-gray-300"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                <h2 className="text-4xl font-bold text-center">Login to Generate Icon!</h2>
+                <div className="m-auto">
+                    <Button onClick={() => {signIn().catch(console.error); setIsModalVisible(false);}}>Login</Button>
+                </div>
+            </div>
+        </div>
+    );
+    
 
   return (
     <>
@@ -53,6 +80,7 @@ const GeneratePage: NextPage = () => {
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center p-5">
     <h1 className="text-3xl font-bold text-slate-400 ">{session.data?.user?.name}</h1>
+    <p className="text-xl">{credits.data || 0} Credits Remaining</p>
     <form className="mt-5 flex w-full max-w-lg flex-col gap-4 rounded-lg bg-slate-300 p-6 shadow-lg"
         onSubmit={handleFormSubmit}
         >
@@ -76,6 +104,7 @@ const GeneratePage: NextPage = () => {
         )}
     </section>
 </main>
+<Modal />
 
     </>
   );
