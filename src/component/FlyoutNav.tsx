@@ -7,17 +7,13 @@ import {
 } from "framer-motion";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "./Button";
-import ShuffleHero from "./ShuffleHero";
+import Link from "next/link";
+import { useBuyCredits } from "~/hooks/useBuyCredits";
 
 const Example = () => {
   return (
     <>
       <FlyoutNav />
-      <div
-        className="relative min-h-screen"
-      >
-        <ShuffleHero />
-      </div>
     </>
   );
 };
@@ -56,7 +52,7 @@ const FlyoutNav = () => {
 const Logo = ({ color = "white" }: { color?: string }) => {
   // Temp logo from https://logoipsum.com/
   return (
-    <div className="flex items-center gap-2">
+    <Link className="flex items-center gap-2" href="/">
       <span className="text-2xl font-bold" style={{ color }}>
       Logo Forge
       </span>
@@ -77,13 +73,15 @@ const Logo = ({ color = "white" }: { color?: string }) => {
           stopColor={color}
         ></path>
       </svg>
-    </div>
+    </Link>
   );
 };
 
 const CTAs = () => {
     const session = useSession();
     const isLoggedIn = !!session.data;
+
+    const  { buyCredits } = useBuyCredits();
 
   return (
     <div className="flex items-center gap-3">
@@ -94,7 +92,8 @@ const CTAs = () => {
         }}>Sign Up / Login</Button>
         )}
          {isLoggedIn && (
-        <>
+        <>  
+            <Button onClick={buyCredits}>Buy Credits</Button>
             <Button onClick={() => {
                 
                 signOut().catch(console.error)

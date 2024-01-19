@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "./Button";
 import { useBuyCredits } from "~/hooks/useBuyCredits";
 import { signIn, signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 const ShuffleHero = () => {
   const  { buyCredits } = useBuyCredits();
@@ -12,21 +13,18 @@ const ShuffleHero = () => {
   return (
     <section className="w-full px-8 py-12 grid grid-cols-1 md:grid-cols-2 items-center gap-8 max-w-6xl mx-auto md:mt-32 mt-20">
       <div>
-        <span className="block mb-4 text-xs md:text-sm text-indigo-500 font-medium">
-          Better every day
-        </span>
-        <h3 className="text-4xl md:text-6xl font-semibold">
-          Let's change it up a bit
-        </h3>
-        <p className="text-base md:text-lg text-slate-700 my-4 md:my-6">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam nobis in
-          error repellat voluptatibus ad.
-        </p>
-        {isLoggedIn && (
-        <>
-            <Button onClick={buyCredits}>Generate An Icon</Button>
-        </>
-        )}
+      <span className="block mb-4 text-xs md:text-sm text-indigo-500 font-medium">
+        Elevate Your Brand
+      </span>
+      <h3 className="text-4xl md:text-6xl font-semibold">
+        Craft Logos Fast!
+      </h3>
+      <p className="text-base md:text-lg text-slate-400 my-4 md:my-6">
+        With Logo Forge, creating striking, memorable logos is swift and effortless. Say goodbye to the hassle of overthinking design – your perfect logo is just a few clicks away.
+      </p>
+
+      <Link href="/generate" className="items-center gap-2 rounded-lg border-2 border-white px-4 py-2 font-semibold text-white transition-colors hover:bg-white hover:text-black">Generate An Icon</Link>
+
       </div>
       <ShuffleGrid />
     </section>

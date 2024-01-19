@@ -2,7 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
-import  FlyoutNav  from "~/component/FlyoutNav";
+import ShuffleHero from "~/component/ShuffleHero";
 
 import { api } from "~/utils/api";
 
@@ -17,7 +17,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="">
-      <FlyoutNav />
+      <ShuffleHero />
       </main>
     </>
   );
