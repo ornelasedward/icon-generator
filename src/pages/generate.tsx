@@ -81,9 +81,12 @@ const GeneratePage: NextPage = () => {
       <main className="flex min-h-screen flex-col items-center justify-center p-5">
     <h1 className="text-3xl font-bold text-slate-400 ">{session.data?.user?.name}</h1>
     <p className="text-xl">{credits.data || 0} Credits Remaining</p>
+
+
     <form className="mt-5 flex w-full max-w-lg flex-col gap-4 rounded-lg bg-slate-300 p-6 shadow-lg"
         onSubmit={handleFormSubmit}
         >
+        <h2 className="text-xl mb-4">1. Describe what you want your icon to look like</h2>
         <div className="flex flex-col gap-2">
             <label className="text-sm font-medium text-gray-700">Prompt</label>
             <input 
@@ -91,7 +94,9 @@ const GeneratePage: NextPage = () => {
                 value={form.prompt}
                 onChange={updateForm('prompt')} />
         </div>
-        <button className="mt-4 rounded bg-blue-500 px-6 py-3 text-lg font-medium text-white transition duration-300 ease-in-out hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Generate</button>
+        <Button 
+        isLoading={generateIcon.isLoading}
+        disabled={generateIcon.isLoading}>Generate</Button>
     </form>
     <h2 className="mt-8 mb-4 text-2xl font-semibold text-gray-800">Your Icons</h2>
     <section className="grid w-full max-w-4xl grid-cols-4 gap-4">
