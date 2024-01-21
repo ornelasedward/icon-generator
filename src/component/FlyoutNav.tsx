@@ -9,6 +9,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "./Button";
 import Link from "next/link";
 import { useBuyCredits } from "~/hooks/useBuyCredits";
+import { api } from "~/utils/api";
 
 const Example = () => {
   return (
@@ -82,6 +83,7 @@ const CTAs = () => {
     const isLoggedIn = !!session.data;
 
     const  { buyCredits } = useBuyCredits();
+    const credits = api.user.getCredits.useQuery();
 
   return (
     <div className="flex items-center gap-3">
@@ -93,6 +95,7 @@ const CTAs = () => {
         )}
          {isLoggedIn && (
         <>  
+            <p className="text-xl mr-4">{credits.data || 0} Credits Remaining</p>
             <Button onClick={buyCredits}>Buy Credits</Button>
             <Button onClick={() => {
                 

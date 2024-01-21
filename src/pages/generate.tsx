@@ -94,9 +94,13 @@ const GeneratePage: NextPage = () => {
                 value={form.prompt}
                 onChange={updateForm('prompt')} />
         </div>
+        <div className="m-auto">
         <Button 
-        isLoading={generateIcon.isLoading}
-        disabled={generateIcon.isLoading}>Generate</Button>
+    isLoading={generateIcon.isLoading}
+    disabled={generateIcon.isLoading}>
+        {generateIcon.isLoading ? "" : "Generate"}
+    </Button>
+    </div>
     </form>
     <h2 className="mt-8 mb-4 text-2xl font-semibold text-gray-800">Your Icons</h2>
     <section className="grid w-full max-w-4xl grid-cols-4 gap-4">

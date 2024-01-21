@@ -4,12 +4,31 @@ import { Button } from "./Button";
 import { useBuyCredits } from "~/hooks/useBuyCredits";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from 'next/router';
 
 const ShuffleHero = () => {
   const  { buyCredits } = useBuyCredits();
   const session = useSession();
   const isLoggedIn = !!session.data;
+  const router = useRouter();
 
+  const handleGenerateIconClick = () => {
+    if (!isLoggedIn) {
+      signIn().then(() => {
+        router.push('/generate');
+      }).catch(console.error);
+    } else {
+      router.push('/generate');
+    }
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push('/generate');
+    }
+  }, [isLoggedIn, router]);
+  
+  
   return (
     <section className="w-full px-8 py-12 grid grid-cols-1 md:grid-cols-2 items-center gap-8 max-w-6xl mx-auto md:mt-32 mt-20">
       <div>
@@ -23,7 +42,12 @@ const ShuffleHero = () => {
         With Logo Forge, creating striking, memorable logos is swift and effortless. Say goodbye to the hassle of overthinking design – your perfect logo is just a few clicks away.
       </p>
 
-      <Link href="/generate" className="items-center gap-2 rounded-lg border-2 border-white px-4 py-2 font-semibold text-white transition-colors hover:bg-white hover:text-black">Generate An Icon</Link>
+      <button
+    onClick={handleGenerateIconClick}
+    className="items-center gap-2 rounded-lg border-2 border-white px-4 py-2 font-semibold text-white transition-colors hover:bg-white hover:text-black"
+  >
+    Generate An Icon
+  </button>
 
       </div>
       <ShuffleGrid />
