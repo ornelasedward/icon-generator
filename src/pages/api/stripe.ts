@@ -36,7 +36,7 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
 
     switch (event.type) {
       case "checkout.session.completed":
-        const completedEvent = event.data.object as {
+        const completedEvent = event.data.object as unknown as {
           id: string;
           metadata: {
             userId: string;
