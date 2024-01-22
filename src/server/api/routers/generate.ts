@@ -74,19 +74,16 @@ export const generateRouter = createTRPCRouter({
         });
 
         // TODO: Save the generated image to the s3 bucket
-        try {
-            await s3.putObject({
-                Bucket: BUCKET_NAME,
-                Body: Buffer.from(base64EncodedImage!, "base64"),
-                Key: icon.id,
-                ContentEncoding: 'base64',
-                ContentType: 'image/gif',
-            }).promise();
-        } catch (error) {
-            console.error("Error uploading to S3:", error);
-            // Handle the error appropriately
-        }
-        
+        await s3
+        .putObject({
+            Bucket: BUCKET_NAME,
+            Body: Buffer.from(base64EncodedImage!, "base64"),
+            Key: icon.id,
+            ContentEncoding: 'base64',
+            ContentType: 'image/gif',
+        })
+        .promise();
+
         return {
            imageUrl: `https://${BUCKET_NAME}.s3.us-east-2.amazonaws.com/${icon.id}`,
         }

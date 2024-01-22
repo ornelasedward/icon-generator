@@ -10,20 +10,11 @@ export function useBuyCredits() {
     return {
         buyCredits: async () => {
             const response = await checkout.mutateAsync();
-            try {
-                const stripe = await stripePromise;
-                if (stripe) {
-                    await stripe.redirectToCheckout({
-                        sessionId: response.id,
-                    });
-                } else {
-                    // Handle the case where stripe is not loaded
-                }
-            } catch (error) {
-                console.error("Error with Stripe redirect:", error);
-                // Handle the error appropriately
-            }
-            
+            const stripe = await stripePromise;
+
+            await stripe?.redirectToCheckout({
+                sessionId: response.id,
+            });
         }
     }
 }
