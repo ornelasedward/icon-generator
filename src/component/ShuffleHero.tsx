@@ -55,22 +55,22 @@ const ShuffleHero = () => {
   );
 };
 
-const shuffle = (array: { id: number; src: string; }[]) => {
-  let currentIndex = array.length, randomIndex;
+const shuffle = (array: (typeof squareData)[0][]) => {
+  let currentIndex = array.length,
+    randomIndex;
 
-  while (currentIndex !== 0) {
+  while (currentIndex != 0) {
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
 
     [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex] as { id: number; src: string; },
-      array[currentIndex] as { id: number; src: string; },
+      array[randomIndex],
+      array[currentIndex],
     ];
   }
 
   return array;
 };
-
 
 const squareData = [
   {
