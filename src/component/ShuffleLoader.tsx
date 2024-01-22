@@ -2,7 +2,7 @@ import { Variants, motion } from "framer-motion";
 
 const variants = {
   initial: {
-    scaleY: 0.5,
+    scaleY: 0.2,
     opacity: 0,
   },
   animate: {
@@ -11,7 +11,7 @@ const variants = {
     transition: {
       repeat: Infinity,
       repeatType: "mirror",
-      duration: 1,
+      duration: 0.8,
       ease: "circIn",
     },
   },
@@ -25,13 +25,13 @@ const ShuffleLoader = () => {
       }}
       initial="initial"
       animate="animate"
-      className="flex gap-1"
+      className="flex gap-1 px-[7px]"
     >
-      <motion.div variants={variants} className="h-12 w-2 bg-white" />
-      <motion.div variants={variants} className="h-12 w-2 bg-white" />
-      <motion.div variants={variants} className="h-12 w-2 bg-white" />
-      <motion.div variants={variants} className="h-12 w-2 bg-white" />
-      <motion.div variants={variants} className="h-12 w-2 bg-white" />
+      <motion.div variants={variants} className="h-6 w-2 bg-slate-800" />
+      <motion.div variants={variants} className="h-6 w-2 bg-slate-800" />
+      <motion.div variants={variants} className="h-6 w-2 bg-slate-800" />
+      <motion.div variants={variants} className="h-6 w-2 bg-slate-800" />
+      <motion.div variants={variants} className="h-6 w-2 bg-slate-800" />
     </motion.div>
   );
 };

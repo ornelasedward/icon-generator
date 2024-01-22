@@ -37,6 +37,7 @@ export const generateRouter = createTRPCRouter({
     generateIcon: protectedProcedure.input(
         z.object({
             prompt: z.string(),
+            color: z.string(),
         })
     )
     .mutation(async ({ctx, input}) => {
@@ -60,8 +61,10 @@ export const generateRouter = createTRPCRouter({
                 message: 'You do not have enough credits to generate an icon.',
             });
         }
+        
+        const finalPrompt = `Craft a premium-quality, text-free logo that exemplifies minimalism and modern design aesthetics. The logo should be constructed from high-contrast, abstract geometric shapes or elegant letterforms that intuitively suggest the theme of ${input.prompt}, without the use of any words or letters. It should be striking in ${input.color}, and crafted with the precision necessary for scalable vector graphics (SVG) format. The final design should be easily identifiable, reflecting a startup’s commitment to simplicity, elegance, and innovation.`;
 
-        const base64EncodedImage = await generateIcon(input.prompt);
+        const base64EncodedImage = await generateIcon(finalPrompt);
 
         const icon = await ctx.prisma.icon.create({
             data: {

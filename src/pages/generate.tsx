@@ -8,10 +8,24 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "~/component/Button";
 import Image from "next/image";
 
+const colors = [
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "blue",
+    "purple",
+    "pink",
+    "gray",
+    "black",
+    "white",
+];
+
 const GeneratePage: NextPage = () => {
 
     const [form, setForm] = useState({
         prompt: "",
+        color: "",
     });
 
     const [imageUrl, setImageUrl] = useState('');
@@ -31,9 +45,9 @@ const GeneratePage: NextPage = () => {
         }
 
         generateIcon.mutate({
-            prompt: form.prompt,
+            ...form,
         });
-        setForm({ prompt: "" });
+        setForm((prev) => ({...prev, prompt: "" }));
     }
 
     function updateForm(key: string) {
@@ -79,21 +93,38 @@ const GeneratePage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center p-5">
+    <div className="m-auto flex flex-col items-center">
     <h1 className="text-3xl font-bold text-slate-400 ">{session.data?.user?.name}</h1>
     <p className="text-xl">{credits.data || 0} Credits Remaining</p>
 
 
-    <form className="mt-5 flex w-full max-w-lg flex-col gap-4 rounded-lg bg-slate-300 p-6 shadow-lg"
+    <form className="mt-5 flex w-full max-w-lg flex-col gap-4 rounded-lg bg-slate-800 p-6 shadow-lg"
         onSubmit={handleFormSubmit}
         >
-        <h2 className="text-xl mb-4">1. Describe what you want your icon to look like</h2>
-        <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium text-gray-700">Prompt</label>
+        <h2 className="text-xl mb-4">1. Describe what you want your Logo to look like</h2>
+        <FormGroup className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-slate-100">Prompt</label>
             <input 
                 className="rounded border border-gray-300 px-4 py-2 text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 value={form.prompt}
                 onChange={updateForm('prompt')} />
-        </div>
+        </FormGroup>
+
+        <h2 className="text-xl mb-4">2. Pick your icon color.</h2>
+        <FormGroup className="grid grid-cols-5">
+            {colors.map((color) => (
+            <label key={color} className="flex gap-2 text-2xl">
+                <input 
+                type="radio" 
+                name="color" 
+                value={color}
+                checked={form.color === color}
+                onChange={() => setForm((prev) => ({ ...prev, color }))}
+                ></input>
+                {color}
+            </label>    
+            ))}
+        </FormGroup>
         <div className="m-auto">
         <Button 
     isLoading={generateIcon.isLoading}
@@ -102,7 +133,8 @@ const GeneratePage: NextPage = () => {
     </Button>
     </div>
     </form>
-    <h2 className="mt-8 mb-4 text-2xl font-semibold text-gray-800">Your Icons</h2>
+    </div>
+    <h2 className="mt-8 mb-4 text-2xl font-semibold text-slate-100">Your Icons</h2>
     <section className="grid w-full max-w-4xl grid-cols-4 gap-4">
         {imageUrl && (
             <img
