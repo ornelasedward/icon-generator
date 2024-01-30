@@ -10,6 +10,7 @@ import { Button } from "./Button";
 import Link from "next/link";
 import { useBuyCredits } from "~/hooks/useBuyCredits";
 import { api } from "~/utils/api";
+import { PrimaryLinkButton } from "./PrimaryLinkButton";
 
 const Example = () => {
   return (
@@ -95,6 +96,14 @@ const CTAs = () => {
         )}
          {isLoggedIn && (
         <>  
+        <ul className="mr-8 flex gap-4">
+          <li>
+            <PrimaryLinkButton href="/collection">Collection</PrimaryLinkButton>
+          </li>
+          <li>
+            <PrimaryLinkButton href="/community">Community</PrimaryLinkButton>
+          </li>
+          </ul>
             <p className="text-xl mr-4">{credits.data || 0} Credits Remaining</p>
             <Button onClick={buyCredits}>Buy Credits</Button>
             <Button onClick={() => {

@@ -16,6 +16,7 @@ const config = {
     "plus.unsplash.com",
     "dalle-icon-generator-app.s3.us-east-2.amazonaws.com",
     "dalle-icon-generator-app.s3.amazonaws.com",
+    "icon-generator-course.s3.amazonaws.com",
   ],
   },
 
