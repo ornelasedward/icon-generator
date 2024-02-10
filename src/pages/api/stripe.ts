@@ -36,12 +36,13 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
 
     switch (event.type) {
       case "checkout.session.completed":
-        const completedEvent = event.data.object as {
-          id: string;
-          metadata: {
-            userId: string;
-          };
-        };
+  const completedEvent = event.data.object as unknown as {
+    id: string;
+    metadata: {
+      userId: string;
+    };
+  };
+
 
         await prisma.user.update({
           where: {

@@ -55,22 +55,26 @@ const ShuffleHero = () => {
   );
 };
 
-const shuffle = (array: (typeof squareData)[0][]) => {
-  let currentIndex = array.length,
-    randomIndex;
+const shuffle = (array: { id: number; src: string }[]) => {
+  let currentIndex = array.length, randomIndex;
 
-  while (currentIndex != 0) {
+  // While there remain elements to shuffle...
+  while (currentIndex !== 0) {
+    // Pick a remaining element...
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
 
+    // And swap it with the current element.
+    // Use non-null assertion operator (!) to assure TypeScript the values will not be undefined.
     [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
+      array[randomIndex]!,
+      array[currentIndex]!,
     ];
   }
 
   return array;
 };
+
 
 const squareData = [
   {
