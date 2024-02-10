@@ -105,7 +105,14 @@ const CTAs = () => {
           </li>
           </ul>
             <p className="text-xl mr-4">{credits.data || 0} Credits Remaining</p>
-            <Button onClick={buyCredits}>Buy Credits</Button>
+            <Button onClick={() => {
+  buyCredits().then(() => {
+    // Handle successful promise resolution, e.g., updating state or UI
+  }).catch((error) => {
+    console.error("Failed to buy credits:", error);
+  });
+}}>Buy Credits</Button>
+
             <Button onClick={() => {
                 
                 signOut().catch(console.error)

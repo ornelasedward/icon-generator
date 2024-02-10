@@ -14,19 +14,29 @@ const ShuffleHero = () => {
 
   const handleGenerateIconClick = () => {
     if (!isLoggedIn) {
-      signIn().then(() => {
-        router.push('/generate');
-      }).catch(console.error);
+      signIn()
+        .then(() => {
+          return router.push('/generate'); // Return the Promise to chain the catch
+        })
+        .catch(console.error); // This catches errors from both signIn and router.push
     } else {
-      router.push('/generate');
+      router.push('/generate').catch(console.error); // Handle potential routing errors
     }
   };
+  
 
   useEffect(() => {
     if (isLoggedIn) {
-      router.push('/generate');
+      router.push('/generate')
+        .then(() => {
+          // Handle successful navigation, if needed
+        })
+        .catch((error) => {
+          console.error("Failed to navigate:", error);
+        });
     }
   }, [isLoggedIn, router]);
+  
   
   
   return (
@@ -159,20 +169,28 @@ const generateSquares = () => {
 };
 
 const ShuffleGrid = () => {
-  const timeoutRef = useRef<any>(null);
+  const timeoutRef = useRef<number | null>(null); // Adjusted typing here
   const [squares, setSquares] = useState(generateSquares());
 
   useEffect(() => {
+    const shuffleSquares = () => {
+      setSquares(generateSquares());
+      // Ensure we clear any existing timeout to prevent memory leaks
+      if (timeoutRef.current !== null) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = window.setTimeout(shuffleSquares, 3000);
+    };
+
     shuffleSquares();
 
-    return () => clearTimeout(timeoutRef.current);
+    // Cleanup function to clear the timeout when the component unmounts or rerenders
+    return () => {
+      if (timeoutRef.current !== null) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, []);
-
-  const shuffleSquares = () => {
-    setSquares(generateSquares());
-
-    timeoutRef.current = setTimeout(shuffleSquares, 3000);
-  };
 
   return (
     <div className="grid grid-cols-4 grid-rows-4 h-[450px] gap-1">
